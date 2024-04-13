@@ -4,7 +4,7 @@ import time
 
 
 def command_split(command): #returns deadline in seconds and note text
-    deadline, text = command.split()[1], command[len(command.split()[1])+6:]
+    deadline, text = command.split()[1], command[len(command.split()[1])+7:]
 
     if deadline[-1] == 'y':
         deadline = round(time.time()) + 60*60*24*365*int(deadline[:-1])
@@ -33,7 +33,7 @@ def time_translate(n):
 
 
 #Token
-bot = telebot.TeleBot('')
+bot = telebot.TeleBot('6711850118:AAEhspfHR-JRElL5Az1yaTZGrXARerhJj78')
 
 
 
@@ -140,14 +140,14 @@ def notes(message):
         cursor.execute(f"""SELECT note, deadline FROM id{table_name}""")
         data = cursor.fetchall()
         s = """"""
-        flag = False
         for number, i in enumerate(data):
+            flag = False
             number = f'{number+1}) '
             if str(i[1]) != '':
                 years, months, days, hours, flag = time_translate(int(i[1]))
             if str(i[1]) == '':
                 s = s + number + i[0] + '\n'
-            if flag:
+            elif flag:
                 if years > 0:
                     s = s + number + i[0] + f' ({years}y:{months}m:{days}d:{hours}h)' + '\n'
                 elif months > 0:
@@ -190,3 +190,4 @@ def delete(message):
 
 
 bot.polling(non_stop=True) #For non-stop operation of the bot
+
